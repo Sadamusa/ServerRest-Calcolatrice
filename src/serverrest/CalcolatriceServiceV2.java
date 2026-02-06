@@ -50,4 +50,34 @@ public class CalcolatriceServiceV2 extends CalcolatriceServiceV1 {
                 return CalcolatriceServiceV1.calcola(operando1, operando2, operatore);
         }
     }
+    
+    /**
+     * Calcola la potenza
+     */
+    public static double potenza(double base, double esponente) {
+        return Math.pow(base, esponente);
+    }
+    
+    /**
+     * Calcola il modulo
+     * Nota: opera su numeri in virgola mobile, il risultato può differire dal modulo intero
+     */
+    public static double modulo(double dividendo, double divisore) {
+        if (divisore == 0) {
+            throw new IllegalArgumentException("Modulo per zero");
+        }
+        return dividendo % divisore;
+    }
+    
+    /**
+     * Calcola la radice n-esima
+     * Nota: radici pari di numeri negativi producono NaN
+     */
+    public static double radice(double radicando, double indice) {
+        if (indice == 0) {
+            throw new IllegalArgumentException("Indice non può essere zero");
+        }
+        // Per radici pari di numeri negativi, il risultato sarà NaN
+        return Math.pow(radicando, 1.0 / indice);
+    }
 }

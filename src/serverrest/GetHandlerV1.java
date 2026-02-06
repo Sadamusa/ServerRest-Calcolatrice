@@ -66,7 +66,8 @@ public class GetHandlerV1 implements HttpHandler {
 
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);
-            exchange.getResponseHeaders().set("API-Version", "1.0");
+            
+            inviaRisposta(exchange, 200, jsonRisposta);
 
         } catch (NumberFormatException e) {
             inviaErrore(exchange, 400, "Operandi non validi. Devono essere numeri");
@@ -112,6 +113,7 @@ public class GetHandlerV1 implements HttpHandler {
 
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().set("API-Version", "1.0");
 
         byte[] bytes = jsonRisposta.getBytes(StandardCharsets.UTF_8);
         exchange.sendResponseHeaders(codice, bytes.length);

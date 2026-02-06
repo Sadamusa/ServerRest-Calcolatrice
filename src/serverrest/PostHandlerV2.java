@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 
@@ -64,14 +65,14 @@ public class PostHandlerV2 implements HttpHandler {
             }
             
             // Esegue il calcolo
-            double risultato = CalcolatriceServiceV1.calcola(
+            double risultato = CalcolatriceServiceV2.calcola(
                 request.getOperando1(),
                 request.getOperando2(),
                 request.getOperatore()
             );
             
-            // Crea l'oggetto risposta
-            OperazioneResponseV1 response = new OperazioneResponseV1(
+            // Crea l'oggetto risposta V2
+            OperazioneResponseV2 response = new OperazioneResponseV2(
                 request.getOperando1(),
                 request.getOperando2(),
                 request.getOperatore(),
@@ -81,7 +82,7 @@ public class PostHandlerV2 implements HttpHandler {
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);
             
-            inviaRisposta(exchange, 200, jsonRisposta);
+            inviaRisposta(exchange, 200, jsonRisposta, response.getRequestID());
             
         } catch (JsonSyntaxException e) {
             inviaErrore(exchange, 400, "JSON non valido: " + e.getMessage());
@@ -95,11 +96,13 @@ public class PostHandlerV2 implements HttpHandler {
     /**
      * Invia una risposta di successo
      */
-    private void inviaRisposta(HttpExchange exchange, int codice, String jsonRisposta) 
+    private void inviaRisposta(HttpExchange exchange, int codice, String jsonRisposta, String requestId) 
             throws IOException {
         
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().set("API-Version", "2.0");
+        exchange.getResponseHeaders().set("X-Request-ID", requestId);
         
         byte[] bytes = jsonRisposta.getBytes(StandardCharsets.UTF_8);
         exchange.sendResponseHeaders(codice, bytes.length);
@@ -120,6 +123,7 @@ public class PostHandlerV2 implements HttpHandler {
         errore.put("status", codice);
         
         String jsonErrore = gson.toJson(errore);
-        inviaRisposta(exchange, codice, jsonErrore);
+        String requestId = UUID.randomUUID().toString();
+        inviaRisposta(exchange, codice, jsonErrore, requestId);
     }
 }

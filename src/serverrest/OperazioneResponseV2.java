@@ -112,13 +112,4 @@ public class OperazioneResponseV2 {
         this.requestID = requestID;
     }
     
-    
-    
-    public static double radice(double radicando, double indice) {
-        if (indice == 0) {
-            throw new IllegalArgumentException("Indice non può essere zero");
-        }
-        return Math.pow(radicando, 1.0 / indice);
-    }
-    
 }

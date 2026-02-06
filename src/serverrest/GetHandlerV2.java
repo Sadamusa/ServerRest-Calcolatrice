@@ -14,6 +14,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  *
@@ -64,8 +65,8 @@ public class GetHandlerV2 implements HttpHandler {
 // Timestamp, versione_api e request_id sono automatici!
 
             String jsonRisposta = gson.toJson(response);
-            exchange.getResponseHeaders().set("API-Version", "2.0");
-            exchange.getResponseHeaders().set("X-Request-ID", response.getRequestID());
+            
+            inviaRisposta(exchange, 200, jsonRisposta, response.getRequestID());
 
         } catch (NumberFormatException e) {
             inviaErrore(exchange, 400, "Operandi non validi. Devono essere numeri");
@@ -106,11 +107,13 @@ public class GetHandlerV2 implements HttpHandler {
     /**
      * Invia una risposta di successo
      */
-    private void inviaRisposta(HttpExchange exchange, int codice, String jsonRisposta)
+    private void inviaRisposta(HttpExchange exchange, int codice, String jsonRisposta, String requestId)
             throws IOException {
 
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().set("API-Version", "2.0");
+        exchange.getResponseHeaders().set("X-Request-ID", requestId);
 
         byte[] bytes = jsonRisposta.getBytes(StandardCharsets.UTF_8);
         exchange.sendResponseHeaders(codice, bytes.length);
@@ -131,6 +134,7 @@ public class GetHandlerV2 implements HttpHandler {
         errore.put("status", codice);
 
         String jsonErrore = gson.toJson(errore);
-        inviaRisposta(exchange, codice, jsonErrore);
+        String requestId = UUID.randomUUID().toString();
+        inviaRisposta(exchange, codice, jsonErrore, requestId);
     }
 }
