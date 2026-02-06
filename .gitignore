@@ -1,0 +1,10 @@
+# Build artifacts
+build/
+dist/
+nbproject/private/
+
+# IDE
+.DS_Store
+*.swp
+*.swo
+*~

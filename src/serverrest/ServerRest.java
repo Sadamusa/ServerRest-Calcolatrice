@@ -33,7 +33,15 @@ public class ServerRest {
             // Crea il server sulla porta specificata
             HttpServer server = HttpServer.create(new InetSocketAddress(porta), 0);
             
-            // Registra gli handler per gli endpoint
+            // API Versione 1
+            server.createContext("/api/v1/calcola/post", new PostHandlerV1());
+            server.createContext("/api/v1/calcola/get", new GetHandlerV1());
+            
+            // API Versione 2
+            server.createContext("/api/v2/calcola/post", new PostHandlerV2());
+            server.createContext("/api/v2/calcola/get", new GetHandlerV2());
+            
+            // Endpoint legacy (compatibilità) - reindirizzano a v1
             server.createContext("/api/calcola/post", new PostHandlerV1());
             server.createContext("/api/calcola/get", new GetHandlerV1());
             
@@ -51,12 +59,21 @@ public class ServerRest {
             System.out.println("Porta: " + porta);
             System.out.println();
             System.out.println("Endpoint disponibili:");
-            System.out.println("  - POST: http://localhost:" + porta + "/api/calcola/post");
-            System.out.println("  - GET:  http://localhost:" + porta + "/api/calcola/get");
-            System.out.println("  - Info: http://localhost:" + porta + "/");
+            System.out.println("  API v1:");
+            System.out.println("    - POST: http://localhost:" + porta + "/api/v1/calcola/post");
+            System.out.println("    - GET:  http://localhost:" + porta + "/api/v1/calcola/get");
+            System.out.println("  API v2:");
+            System.out.println("    - POST: http://localhost:" + porta + "/api/v2/calcola/post");
+            System.out.println("    - GET:  http://localhost:" + porta + "/api/v2/calcola/get");
+            System.out.println("  Legacy (compatibilità con v1):");
+            System.out.println("    - POST: http://localhost:" + porta + "/api/calcola/post");
+            System.out.println("    - GET:  http://localhost:" + porta + "/api/calcola/get");
+            System.out.println("  Info: http://localhost:" + porta + "/");
             System.out.println();
-            System.out.println("Operatori supportati:");
+            System.out.println("Operatori v1:");
             System.out.println("  SOMMA, SOTTRAZIONE, MOLTIPLICAZIONE, DIVISIONE");
+            System.out.println("Operatori v2 (include v1 +):");
+            System.out.println("  POTENZA, MODULO, RADICE");
             System.out.println();
             System.out.println("Premi Ctrl+C per fermare il server");
             System.out.println("==============================================");
