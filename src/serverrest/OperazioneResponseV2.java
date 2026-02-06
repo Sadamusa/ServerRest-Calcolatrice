@@ -87,4 +87,38 @@ public class OperazioneResponseV2 {
     public void setOperazione(String operazione) {
         this.operazione = operazione;
     }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getVersioneApi() {
+        return versioneApi;
+    }
+
+    public void setVersioneApi(String versioneApi) {
+        this.versioneApi = versioneApi;
+    }
+
+    public String getRequestID() {
+        return requestID;
+    }
+
+    public void setRequestID(String requestID) {
+        this.requestID = requestID;
+    }
+    
+    
+    
+    public static double radice(double radicando, double indice) {
+        if (indice == 0) {
+            throw new IllegalArgumentException("Indice non può essere zero");
+        }
+        return Math.pow(radicando, 1.0 / indice);
+    }
+    
 }
