@@ -20,7 +20,7 @@ import java.util.UUID;
  *
  * @author delfo
  */
-public class GetHandlerV2 implements HttpHandler {
+public class GetHandlerV2 extends GetHandlerV1 implements HttpHandler {
 
     // Istanza Gson configurata per pretty printing
     private final Gson gson = new GsonBuilder()
