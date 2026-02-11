@@ -22,7 +22,7 @@ import java.util.Map;
 public class GetHandlerV1 implements HttpHandler {
 
     // Istanza Gson configurata per pretty printing
-    private final Gson gson = new GsonBuilder()
+    protected final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
 
@@ -81,7 +81,7 @@ public class GetHandlerV1 implements HttpHandler {
     /**
      * Estrae i parametri dalla query string
      */
-    private Map<String, String> estraiParametri(String query) {
+    protected Map<String, String> estraiParametri(String query) {
         Map<String, String> parametri = new HashMap<>();
 
         if (query == null || query.isEmpty()) {
@@ -108,7 +108,7 @@ public class GetHandlerV1 implements HttpHandler {
     /**
      * Invia una risposta di successo
      */
-    private void inviaRisposta(HttpExchange exchange, int codice, String jsonRisposta)
+    protected void inviaRisposta(HttpExchange exchange, int codice, String jsonRisposta)
             throws IOException {
 
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
@@ -126,7 +126,7 @@ public class GetHandlerV1 implements HttpHandler {
     /**
      * Invia una risposta di errore in formato JSON
      */
-    private void inviaErrore(HttpExchange exchange, int codice, String messaggio)
+    protected void inviaErrore(HttpExchange exchange, int codice, String messaggio)
             throws IOException {
 
         Map<String, Object> errore = new HashMap<>();

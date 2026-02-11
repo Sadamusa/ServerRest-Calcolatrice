@@ -71,7 +71,6 @@ public class CalcolatriceServiceV2 extends CalcolatriceServiceV1 {
     
     /**
      * Calcola la radice n-esima
-     * Nota: radici pari di numeri negativi producono NaN
      */
     public static double radice(double radicando, double indice) {
         if (indice == 0) {
