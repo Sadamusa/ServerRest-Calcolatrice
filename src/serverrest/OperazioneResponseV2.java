@@ -47,6 +47,7 @@ public class OperazioneResponseV2 {
     }
 
     // Getter
+    /*
     public double getOperando1() {
         return operando1;
     }
@@ -87,7 +88,7 @@ public class OperazioneResponseV2 {
     public void setOperazione(String operazione) {
         this.operazione = operazione;
     }
-
+    */
     public String getTimestamp() {
         return timestamp;
     }

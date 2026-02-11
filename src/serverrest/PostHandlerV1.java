@@ -29,7 +29,7 @@ import java.util.Map;
 public class PostHandlerV1 implements HttpHandler {
     
     // Istanza Gson configurata per pretty printing
-    private final Gson gson = new GsonBuilder()
+    protected final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
     

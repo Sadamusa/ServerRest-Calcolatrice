@@ -42,9 +42,8 @@ public class PostHandlerV2 implements HttpHandler {
             inviaErrore(exchange, 405, "Metodo non consentito. Usa POST");
             return;
         }
-        
         try {
-            // Legge il body della richiesta
+            // Legge il body della richiesta            
             BufferedReader reader = new BufferedReader(
                 new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8)
             );
