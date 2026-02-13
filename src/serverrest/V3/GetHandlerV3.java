@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package serverrest;
+package serverrest.V3;
 
+import serverrest.V2.GetHandlerV2;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
@@ -31,31 +32,30 @@ public class GetHandlerV3 extends GetHandlerV2 implements HttpHandler {
             Map<String, String> parametri = estraiParametri(exchange.getRequestURI().getQuery());
 
             // Validazione parametri
-            if (!parametri.containsKey("operando1")
-                    || !parametri.containsKey("operando2")
-                    || !parametri.containsKey("operatore")) {
+            if (!parametri.containsKey("unita1")
+                    || !parametri.containsKey("unita2")
+                    || !parametri.containsKey("valore")) {
                 inviaErrore(exchange, 400,
                         "Parametri mancanti. Necessari: operando1, operando2, operatore");
                 return;
             }
 
             // Parsing dei valori
-            double operando1 = Double.parseDouble(parametri.get("operando1"));
-            double operando2 = Double.parseDouble(parametri.get("operando2"));
-            String operatore = parametri.get("operatore");
+            double unita1 = Double.parseDouble(parametri.get("unita1"));
+            double unita2 = Double.parseDouble(parametri.get("unita2"));
+            String valore = parametri.get("valore");
 
-            // Esegue il calcolo con la versione V2
-            double risultato = CalcolatriceServiceV2.calcola(operando1, operando2, operatore);
+            // Esegue il calcolo con la versione V3
+            double risultato = CalcolatriceServiceV3.calcola(unita1, unita2, valore);
 
-            // Crea l'oggetto risposta V2 (con timestamp, versione_api e request_id automatici)
-            OperazioneResponseV2 response = new OperazioneResponseV2(
-                    operando1, operando2, operatore, risultato
-            );
+            // Crea l'oggetto risposta V3 (con timestamp, versione_api e request_id automatici)
+            OperazioneResponseV3 response = new OperazioneResponseV3(
+                    unita1, unita2, valore);
 
             String jsonRisposta = gson.toJson(response);
             
-            // Invia risposta con headers aggiuntivi per V2
-            inviaRispostaV2(exchange, 200, jsonRisposta, response.getRequestID());
+            // Invia risposta con headers aggiuntivi per V3
+            inviaRispostaV3(exchange, 200, jsonRisposta, response.getRequestID());
 
         } catch (NumberFormatException e) {
             inviaErrore(exchange, 400, "Operandi non validi. Devono essere numeri");
@@ -67,14 +67,14 @@ public class GetHandlerV3 extends GetHandlerV2 implements HttpHandler {
     }
 
     /**
-     * Invia una risposta di successo con headers aggiuntivi per API v2
+     * Invia una risposta di successo con headers aggiuntivi per API v3
      */
-    private void inviaRispostaV2(HttpExchange exchange, int codice, String jsonRisposta, String requestId)
+    private void inviaRispostaV3(HttpExchange exchange, int codice, String jsonRisposta, String requestId)
             throws IOException {
 
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
-        exchange.getResponseHeaders().set("API-Version", "2.0");
+        exchange.getResponseHeaders().set("API-Version", "3.0");
         exchange.getResponseHeaders().set("X-Request-ID", requestId);
 
         byte[] bytes = jsonRisposta.getBytes(StandardCharsets.UTF_8);

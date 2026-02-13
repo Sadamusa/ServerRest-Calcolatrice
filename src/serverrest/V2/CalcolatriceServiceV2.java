@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package serverrest;
+package serverrest.V2;
+
+import serverrest.V1.CalcolatriceServiceV1;
 
 /**
  *

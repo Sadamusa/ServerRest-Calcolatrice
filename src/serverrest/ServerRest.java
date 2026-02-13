@@ -5,6 +5,11 @@
 
 package serverrest;
 
+import serverrest.V3.GetHandlerV3;
+import serverrest.V2.PostHandlerV2;
+import serverrest.V2.GetHandlerV2;
+import serverrest.V1.GetHandlerV1;
+import serverrest.V1.PostHandlerV1;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpExchange;
 import com.google.gson.Gson;
