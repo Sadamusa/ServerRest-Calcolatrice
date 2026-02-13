@@ -41,6 +41,10 @@ public class ServerRest {
             server.createContext("/api/v2/calcola/post", new PostHandlerV2());
             server.createContext("/api/v2/calcola/get", new GetHandlerV2());
             
+            // API Versione 3
+            server.createContext("/api/v3/converte/post", new PostHandlerV3());
+            server.createContext("/api/v3/converte/get", new GetHandlerV3());
+            
             // Endpoint legacy (compatibilità) - reindirizzano a v1
             server.createContext("/api/calcola/post", new PostHandlerV1());
             server.createContext("/api/calcola/get", new GetHandlerV1());
@@ -65,9 +69,12 @@ public class ServerRest {
             System.out.println("  API v2:");
             System.out.println("    - POST: http://localhost:" + porta + "/api/v2/calcola/post");
             System.out.println("    - GET:  http://localhost:" + porta + "/api/v2/calcola/get");
-            System.out.println("  Legacy (compatibilità con v1):");
-            System.out.println("    - POST: http://localhost:" + porta + "/api/calcola/post");
-            System.out.println("    - GET:  http://localhost:" + porta + "/api/calcola/get");
+            System.out.println("  API v3:");
+            System.out.println("    - POST: http://localhost:" + porta + "/api/v3/converte/post");
+            System.out.println("    - GET:  http://localhost:" + porta + "/api/v3/converte/get");
+            System.out.println("  Legacy (compatibilità con v2):");
+            System.out.println("    - POST: http://localhost:" + porta + "/api/v2/calcola/post");
+            System.out.println("    - GET:  http://localhost:" + porta + "/api/v2/calcola/get");
             System.out.println("  Info: http://localhost:" + porta + "/");
             System.out.println();
             System.out.println("Operatori v1:");
@@ -95,12 +102,12 @@ public class ServerRest {
         
         Map info = new HashMap<>();
         info.put("messaggio", "Benvenuto alla Calcolatrice REST API");
-        info.put("versione", "2.0.0");
+        info.put("versione", "3.0.0");
         info.put("tecnologia", "Java + GSON");
         
         Map endpoints = new HashMap<>();
         endpoints.put("POST", "/api/calcola/post");
-        endpoints.put("GET", "/api/calcola/get?operando1=X&operando2=Y&operatore=OP");
+        endpoints.put("GET", "/api/v3/converte/get?unita1=un1&unita2=un2&valore=val");
         info.put("endpoints", endpoints);
         
         Map operatori = new HashMap<>();
