@@ -29,12 +29,12 @@ public class ConvertitoreResponse {
     }
 
     // Costruttore con parametri
-    public ConvertitoreResponse(String unita1, String unita2, double velore, String conversione) {
+    public ConvertitoreResponse(String unita1, String unita2, double valore, String conversione) {
+        //                                                            ^^^^^^ corretto
         this.unita1 = unita1;
         this.unita2 = unita2;
         this.valore = valore;
-        this.conversione = String.format("%.2f %s %.2f = %.2f",
-                unita1, unita2, valore);
+        this.conversione = conversione; // Usa il parametro passato
 
         // Metadata automatici
         this.timestamp = LocalDateTime.now().format(

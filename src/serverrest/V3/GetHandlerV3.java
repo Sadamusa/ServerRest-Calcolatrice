@@ -26,7 +26,7 @@ public class GetHandlerV3 extends GetHandlerV2 implements HttpHandler {
             inviaErrore(exchange, 405, "Metodo non consentito. Usa GET");
             return;
         }
-        
+
         try {
             // Estrae i parametri dalla query string
             Map<String, String> parametri = estraiParametri(exchange.getRequestURI().getQuery());
@@ -42,18 +42,19 @@ public class GetHandlerV3 extends GetHandlerV2 implements HttpHandler {
 
             // Parsing dei valori
             String unita1 = parametri.get("unita1");
-            String unita2 = parametri.get("unita2");            
+            String unita2 = parametri.get("unita2");
             Double valore = Double.parseDouble(parametri.get("valore"));
 
             // Esegue il calcolo con la versione V3
-            ConvertitoreService.calcola(unita1, unita2, valore);
+            Double risultatoNumerico = ConvertitoreService.calcola(unita1, unita2, valore);
+            String risultato = risultatoNumerico.toString();
 
             // Crea l'oggetto risposta V3 (con timestamp, versione_api e request_id automatici)
-            OperazioneResponseV3 response = new OperazioneResponseV3(
-                    unita1, unita2, valore);
+            ConvertitoreResponse response = new ConvertitoreResponse(
+                    unita1, unita2, valore, risultato);
 
             String jsonRisposta = gson.toJson(response);
-            
+
             // Invia risposta con headers aggiuntivi per V3
             inviaRispostaV3(exchange, 200, jsonRisposta, response.getRequestID());
 
