@@ -4,7 +4,6 @@
  */
 package serverrest.V3;
 
-import serverrest.V2.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -15,13 +14,12 @@ import java.util.UUID;
  */
 public class ConvertitoreResponse {
 
-    private double operando1;
-    private double operando2;
-    private String operatore;
-    private double risultato;
-    private String operazione;
+    private String unita1;
+    private String unita2;
+    private double valore;
+    private String conversione;
 
-    //Campi aggiuntivi per v2
+    //Campi aggiuntivi per conversione
     private String timestamp;
     private String versioneApi;
     private String requestID;
@@ -31,65 +29,53 @@ public class ConvertitoreResponse {
     }
 
     // Costruttore con parametri
-    public ConvertitoreResponse(double operando1, double operando2,
-            String operatore, double risultato) {
-        this.operando1 = operando1;
-        this.operando2 = operando2;
-        this.operatore = operatore;
-        this.risultato = risultato;
-        this.operazione = String.format("%.2f %s %.2f = %.2f",
-                operando1, operatore, operando2, risultato);
+    public ConvertitoreResponse(String unita1, String unita2, double velore, String conversione) {
+        this.unita1 = unita1;
+        this.unita2 = unita2;
+        this.valore = valore;
+        this.conversione = String.format("%.2f %s %.2f = %.2f",
+                unita1, unita2, valore);
 
         // Metadata automatici
         this.timestamp = LocalDateTime.now().format(
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.versioneApi = "2.0";
+        this.versioneApi = "3.0";
         this.requestID = UUID.randomUUID().toString();
     }
 
+    public String getUnita1() {
+        return unita1;
+    }
+
+    public void setUnita1(String unita1) {
+        this.unita1 = unita1;
+    }
+
+    public String getUnita2() {
+        return unita2;
+    }
+
+    public void setUnita2(String unita2) {
+        this.unita2 = unita2;
+    }
+
+    public double getValore() {
+        return valore;
+    }
+
+    public void setValore(double valore) {
+        this.valore = valore;
+    }
+
+    public String getConversione() {
+        return conversione;
+    }
+
     // Getter
-    /*
-    public double getOperando1() {
-        return operando1;
+    public void setConversione(String conversione) {
+        this.conversione = conversione;
     }
 
-    public double getOperando2() {
-        return operando2;
-    }
-
-    public String getOperatore() {
-        return operatore;
-    }
-
-    public double getRisultato() {
-        return risultato;
-    }
-
-    public String getOperazione() {
-        return operazione;
-    }
-
-    // Setter
-    public void setOperando1(double operando1) {
-        this.operando1 = operando1;
-    }
-
-    public void setOperando2(double operando2) {
-        this.operando2 = operando2;
-    }
-
-    public void setOperatore(String operatore) {
-        this.operatore = operatore;
-    }
-
-    public void setRisultato(double risultato) {
-        this.risultato = risultato;
-    }
-
-    public void setOperazione(String operazione) {
-        this.operazione = operazione;
-    }
-    */
     public String getTimestamp() {
         return timestamp;
     }
@@ -113,5 +99,5 @@ public class ConvertitoreResponse {
     public void setRequestID(String requestID) {
         this.requestID = requestID;
     }
-    
+
 }
