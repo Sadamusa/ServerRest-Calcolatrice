@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author delfo
  */
-public class GetHandlerV3 extends GetHandlerV2 implements HttpHandler {
+public class GetHandlerV3 implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -46,7 +46,7 @@ public class GetHandlerV3 extends GetHandlerV2 implements HttpHandler {
             String valore = parametri.get("valore");
 
             // Esegue il calcolo con la versione V3
-            double risultato = CalcolatriceServiceV3.calcola(unita1, unita2, valore);
+            double risultato = ConvertitoreService.calcola(unita1, unita2, valore);
 
             // Crea l'oggetto risposta V3 (con timestamp, versione_api e request_id automatici)
             OperazioneResponseV3 response = new OperazioneResponseV3(
