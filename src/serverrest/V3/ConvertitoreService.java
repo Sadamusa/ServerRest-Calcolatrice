@@ -4,8 +4,6 @@
  */
 package serverrest.V3;
 
-import serverrest.V2.*;
-import serverrest.V1.CalcolatriceServiceV1;
 
 /**
  *
@@ -24,20 +22,28 @@ public class ConvertitoreService  {
         unita1 = unita1.toUpperCase().trim();
         unita2 = unita2.toUpperCase().trim();
 
-        switch (unita2) {
+        switch (unita1) {
             case "METRO":
             case "MT":
             case "M":
-                return convertiMetri(valore);
+                if(unita2.equals("YARD")){                    
+                    return convertiMetri(valore);
+                } else {
+                    throw new IllegalArgumentException("Unita' consentite: METRI & YARD");
+                }
+                
 
             case "YARD":
             case "YARDE":
             case "Y":
             case "YD":
-                return convertiYard(valore);
+                if(unita2.equals("Metri")){                    
+                    return convertiYard(valore);
+                } else {
+                    throw new IllegalArgumentException("Unita' consentite: METRI & YARD");
+                }
                 
             default:
-// Riusa le operazioni base della classe padre
                 return convertiMetri(valore);
         }
     }

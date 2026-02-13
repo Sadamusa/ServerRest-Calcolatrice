@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author delfo
  */
-public class GetHandlerV3 implements HttpHandler {
+public class GetHandlerV3 extends GetHandlerV2 implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -41,12 +41,12 @@ public class GetHandlerV3 implements HttpHandler {
             }
 
             // Parsing dei valori
-            double unita1 = Double.parseDouble(parametri.get("unita1"));
-            double unita2 = Double.parseDouble(parametri.get("unita2"));
-            String valore = parametri.get("valore");
+            String unita1 = parametri.get("unita1");
+            String unita2 = parametri.get("unita2");            
+            Double valore = Double.parseDouble(parametri.get("valore"));
 
             // Esegue il calcolo con la versione V3
-            double risultato = ConvertitoreService.calcola(unita1, unita2, valore);
+            ConvertitoreService.calcola(unita1, unita2, valore);
 
             // Crea l'oggetto risposta V3 (con timestamp, versione_api e request_id automatici)
             OperazioneResponseV3 response = new OperazioneResponseV3(
